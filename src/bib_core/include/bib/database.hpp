@@ -17,7 +17,7 @@ namespace bib {
 
     namespace sql = sqlite_orm;
 
-    auto make_storage(std::string_view db_name) {
+    inline auto make_storage(std::string_view db_name) {
         return sql::make_storage(
             db_name.data(),
             sql::make_table(
@@ -49,7 +49,7 @@ namespace bib {
 
     class [[nodiscard]] database final {
     public:
-        explicit database(std::string_view db_name);
+        explicit database(std::string_view db_name = default_database);
 
         database(const database&) = delete;
         database(database&&) = default;
