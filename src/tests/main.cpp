@@ -5,5 +5,5 @@
 #include "bib.hpp"
 
 TEST_CASE("foo") {
-    foo();
+    
 }

@@ -23,7 +23,9 @@ find_package(Catch2 CONFIG REQUIRED)
 
 # Bib core shared library
 add_library(bib_core
-                    src/bib_core/bib.cpp
+                    src/bib_core/database.cpp
+                    src/bib_core/author_dao.cpp
+                    src/bib_core/book_dao.cpp
 )
 target_include_directories(bib_core PUBLIC src/bib_core/include)
 target_link_libraries(bib_core
