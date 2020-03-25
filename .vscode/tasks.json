@@ -6,7 +6,7 @@
             "type": "shell",
             "command": "${workspaceFolder}/tools/shells/start_container.sh",
             "problemMatcher": [],
-	    "runOptions": {
+            "runOptions": {
                 "runOn": "folderOpen"
             }
         },

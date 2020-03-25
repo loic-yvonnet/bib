@@ -5,7 +5,7 @@
             "name": "Launch C++ Docker Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/hello_world",
+            "program": "${workspaceFolder}/build/bin/bib",
             "args": [],
             "targetArchitecture": "x64",
             "stopAtEntry": false,
