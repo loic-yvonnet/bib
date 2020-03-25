@@ -46,6 +46,8 @@ target_link_libraries(tests
 # Bib front-end
 add_executable(bib
                     src/bib/main.cpp
+                    src/bib/parser.cpp
+                    src/bib/dispatcher.cpp
 )
 target_include_directories(bib PRIVATE src/bib/include)
 target_link_libraries(bib
