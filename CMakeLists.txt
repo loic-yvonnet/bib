@@ -38,6 +38,8 @@ target_link_libraries(bib_core
 # Bib unit tests suite
 add_executable(tests
                     src/tests/main.cpp
+                    src/tests/test_author_dao.cpp
+                    src/tests/test_book_dao.cpp
 )
 target_link_libraries(tests
     PRIVATE

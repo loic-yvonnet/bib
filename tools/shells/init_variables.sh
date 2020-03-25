@@ -27,3 +27,4 @@ export docker_vcpkg_dependencies=/vcpkg/scripts/buildsystems/vcpkg.cmake
 export target_program_name=bib
 export target_program_path=${build_directory}/bin/${target_program_name}
 export docker_target_program_path=${docker_build_directory}/bin/${target_program_name}
+export docker_test_suite=${docker_build_directory}/bin/tests

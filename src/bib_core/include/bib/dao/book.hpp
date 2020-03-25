@@ -27,6 +27,8 @@ namespace bib {
 
             std::vector<dto::book> search_books_by_email(std::string_view author_email) const;
 
+            std::vector<dto::book> get_books() const;
+
         private:
             database& db;
         };

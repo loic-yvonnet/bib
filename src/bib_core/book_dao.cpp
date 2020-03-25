@@ -99,5 +99,10 @@ namespace bib {
 
             return result;
         }
+
+        std::vector<dto::book> book::get_books() const
+        {
+            return db->get_all<dto::book>();
+        }
     }
 }

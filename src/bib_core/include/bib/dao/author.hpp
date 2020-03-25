@@ -23,6 +23,8 @@ namespace bib {
 
             std::vector<dto::author> search_authors(std::string_view book_isbn) const;
 
+            std::vector<dto::author> get_authors() const;
+
         private:
             database& db;
         };

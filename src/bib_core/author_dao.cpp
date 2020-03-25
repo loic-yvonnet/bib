@@ -57,5 +57,10 @@ namespace bib {
 
             return result;
         }
+
+        std::vector<dto::author> author::get_authors() const
+        {
+            return db->get_all<dto::author>();
+        }
     }
 }
