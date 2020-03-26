@@ -49,7 +49,10 @@ The test suite may be run with:
 ## Work in Progress
 
 The following things are pending:
-* Debug the CLI side (issues with the use of boost::program_options).
 * Add comments in the header files.
-* Check user inputs.
+* Add shells at the top of the solution for convenience.
 * Support Windows (addition of batches, declspec, etc.).
+* Check user inputs.
+* Add logs (verbose mode).
+* Troubleshoot the boost::program_options that truncs strings at the first space.
+* Fix the help message.
