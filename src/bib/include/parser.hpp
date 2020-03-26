@@ -96,7 +96,7 @@ namespace bib {
                 arg.author_email = variables["email"].as<std::string>();
             }
             if (variables.count("last-name")) {
-                arg.author_email = variables["last-name"].as<std::string>();
+                arg.author_last_name = variables["last-name"].as<std::string>();
             }
 
             return arg;

@@ -60,7 +60,7 @@ namespace bib {
 
             po::positional_options_description pos;
             pos.add("action", 1).
-                add("subject", 2).
+                add("subject", 1).
                 add("subargs", -1);
 
             parsed_options = po::command_line_parser(argc, argv).
@@ -86,7 +86,7 @@ namespace bib {
         {
             po::options_description global("Global options");
             global.add_options()
-                ("action", po::value<std::string>(), "Action to execute (add or search)")
+                ("action", po::value<std::string>()->required(), "Action to execute (add or search)")
                 ("subject", po::value<std::string>(), "Subject of the action (author or book)")
                 ("subargs", po::value<std::vector<std::string>>(), "Arguments for command");
             
@@ -97,7 +97,7 @@ namespace bib {
         {
             po::options_description options("Author addition options");
             options.add_options()
-                ("email", po::value<std::string>(), "Email address of the author (mandatory)")
+                ("email", po::value<std::string>()->required(), "Email address of the author (mandatory)")
                 ("first-name", po::value<std::string>(), "First name of the author")
                 ("last-name", po::value<std::string>(), "First name of the author")
                 ("mobile", po::value<std::string>(), "Mobile phone number of the author")
@@ -112,7 +112,7 @@ namespace bib {
         {
             po::options_description options("Author search options");
             options.add_options()
-                ("book", po::value<std::string>(), "The book title whose author(s) is(are) requested");
+                ("book", po::value<std::string>()->required(), "The book title whose author(s) is(are) requested");
 
             return options;
         }
@@ -121,10 +121,10 @@ namespace bib {
         {
             po::options_description options("Book addition options");
             options.add_options()
-                ("isbn", po::value<std::string>(), "International Standard Book Number")
-                ("title", po::value<std::string>(), "Title of the book")
-                ("year", po::value<std::string>(), "Publication year of the book")
-                ("authors", po::value<std::string>(), "Email addresses of the authors of the book");
+                ("isbn", po::value<std::string>()->required(), "International Standard Book Number")
+                ("title", po::value<std::string>()->required(), "Title of the book")
+                ("year", po::value<std::string>()->required(), "Publication year of the book")
+                ("authors", po::value<std::vector<std::string>>()->required(), "Email addresses of the authors of the book");
 
             return options;
         }
@@ -146,8 +146,11 @@ namespace bib {
             std::vector<std::string> args = po::collect_unrecognized(parsed_options.options, po::include_positional);
             args.erase(std::begin(args), std::begin(args) + 1);
 
-            // Parse again
+            // Parse the extra arguments
             po::store(po::command_line_parser(args).options(options).run(), variables);
+            
+            // Check the inputs
+            po::notify(variables);
         }
     }
 }

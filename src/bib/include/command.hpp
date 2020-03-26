@@ -86,18 +86,18 @@ namespace bib {
             const auto result = [this] {
                 bib::database db;
                 bib::dao::book dao(db);
-                if (data.author_email) {
+                if (data.author_email && !data.author_email->empty()) {
                     return dao.search_books_by_email(*data.author_email);
                 }
-                if (data.author_last_name) {
+                if (data.author_last_name && !data.author_last_name->empty()) {
                     return dao.search_books_by_name(*data.author_last_name);
                 }
-                throw std::invalid_argument("An author email or an author last name must be specified.");
+                throw std::invalid_argument("Either --email or --last-name must be specified.");
             }();
 
             std::stringstream ss;
             for (const auto& current_book : result) {
-                ss << current_book.isbn << ' ' << current_book.title << '\n';
+                ss << current_book.isbn << " - " << current_book.title << '\n';
             }
 
             return ss.str();
