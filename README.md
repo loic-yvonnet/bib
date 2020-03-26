@@ -49,9 +49,7 @@ The test suite may be run with:
 ## Work in Progress
 
 The following things are pending:
-* Debug the unit tests.
-* Debug the library (issues with the use of sqlite).
 * Debug the CLI side (issues with the use of boost::program_options).
-* Add more unit tests.
 * Add comments in the header files.
+* Check user inputs.
 * Support Windows (addition of batches, declspec, etc.).
