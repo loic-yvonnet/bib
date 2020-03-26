@@ -53,3 +53,4 @@ The following things are pending:
 * Troubleshoot the boost::program_options that truncs strings at the first space.
 * Fix the help message.
 * Fix the VS Code gdb issue.
+* Setup Travis CI or Jenkins.
