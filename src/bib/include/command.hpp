@@ -38,9 +38,8 @@ namespace bib {
 
             bib::database db;
             bib::dao::author dao(db);
-            dao.insert_author(auth);
-
-            return "Insertion successful";
+            
+            return dao.insert_author(auth);
         }
 
         template <>
@@ -62,6 +61,8 @@ namespace bib {
         template <>
         inline std::string command<arguments::book_addition_arg>::execute() const
         {
+            std::stringstream ss;
+
             bib::dto::book bk{
                 data.isbn,
                 data.title,
@@ -70,13 +71,13 @@ namespace bib {
 
             bib::database db;
             bib::dao::book dao(db);
-            dao.insert_book(bk);
+            ss << dao.insert_book(bk);
 
             for (const auto& current_email : data.author_emails) {
-                dao.add_author(data.isbn, current_email);
+                ss << '\n' << dao.add_author(data.isbn, current_email);
             }
 
-            return "Insertion successful";
+            return ss.str();
         }
 
         template <>

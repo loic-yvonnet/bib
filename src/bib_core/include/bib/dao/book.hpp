@@ -5,6 +5,7 @@
 #include "bib/database.hpp"
 
 // STL
+#include <string>
 #include <string_view>
 #include <vector>
 
@@ -19,9 +20,9 @@ namespace bib {
             book& operator=(const book&) = delete;
             book& operator=(book&&) = delete;
 
-            void insert_book(const dto::book& bk);
+            std::string insert_book(const dto::book& bk);
 
-            void add_author(std::string_view isbn, std::string_view author_email);
+            std::string add_author(std::string_view isbn, std::string_view author_email);
 
             std::vector<dto::book> search_books_by_name(std::string_view author_last_name) const;
 

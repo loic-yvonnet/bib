@@ -19,7 +19,7 @@ namespace bib {
             author& operator=(const author&) = delete;
             author& operator=(author&&) = delete;
 
-            void insert_author(const dto::author& auth);
+            std::string insert_author(const dto::author& auth);
 
             std::vector<dto::author> search_authors(std::string_view book_isbn) const;
 

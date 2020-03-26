@@ -5,7 +5,7 @@
             "name": "Launch C++ Docker Debug",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/build/bin/tests",
+            "program": "${workspaceFolder}/build/bin/bib",
             "args": [],
             "targetArchitecture": "x64",
             "stopAtEntry": false,
@@ -14,7 +14,7 @@
             "preLaunchTask": "start-gdbserver",
             "miDebuggerServerAddress": "localhost:2000",
             "miDebuggerPath": "/usr/bin/gdb",
-            "sourceFileMap":{
+            "sourceFileMap": {
 				"/home/develop/dev": "${workspaceRoot}"
 			}
         }

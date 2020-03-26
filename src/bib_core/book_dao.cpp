@@ -15,25 +15,29 @@ namespace bib {
         {
         }
 
-        void book::insert_book(const dto::book& bk)
+        std::string book::insert_book(const dto::book& bk)
         {
             db->insert(bk);
+            
+            return db->dump(bk);
         }
 
-        void book::add_author(std::string_view isbn, std::string_view author_email)
+        std::string book::add_author(std::string_view isbn, std::string_view author_email)
         {
-            dto::authors_of_books entry{ -1, isbn.data(), author_email.data() };
+            dto::authors_of_books entry{
+                isbn.data(),
+                author_email.data()
+            };
 
             db->insert(entry);
+            
+            return db->dump(entry);
         }
 
         std::vector<dto::book> book::search_books_by_name(std::string_view author_last_name) const
         {
-            std::vector<dto::book> result;
-
             using namespace sql;
-
-            auto rows = db->select(
+            const auto rows = db->select(
                 columns(
                     &dto::book::isbn,
                     &dto::book::title,
@@ -43,24 +47,21 @@ namespace bib {
                     &dto::authors_of_books::author_email,
                     &dto::authors_of_books::book_isbn
                 ),
-                left_join<dto::authors_of_books>(
-                    on(c(&dto::author::email) == &dto::authors_of_books::author_email)
+                inner_join<dto::book>(
+                    on(c(&dto::authors_of_books::book_isbn) == &dto::book::isbn)
                 ),
-                left_join<dto::authors_of_books>(
-                    on(c(&dto::book::isbn) == &dto::authors_of_books::book_isbn)
+                inner_join<dto::author>(
+                    on(c(&dto::authors_of_books::author_email) == &dto::author::email)
                 ),
                 where(c(&dto::author::last_name) == author_last_name.data())
             );
 
+            std::vector<dto::book> result;
             const auto nb_results = std::distance(std::begin(rows), std::end(rows));
             result.reserve(nb_results);
-
             std::transform(std::begin(rows), std::end(rows), std::back_inserter(result), [](const auto& row) {
-                return dto::book{
-                    std::get<0>(row),
-                    std::get<1>(row),
-                    std::get<2>(row)
-                };
+                const auto& [isbn, title, year, _1, _2, _3, _4] = row;
+                return dto::book{ isbn, title, year };
             });
 
             return result;
@@ -68,11 +69,8 @@ namespace bib {
 
         std::vector<dto::book> book::search_books_by_email(std::string_view author_email) const
         {
-            std::vector<dto::book> result;
-
             using namespace sql;
-
-            auto rows = db->select(
+            const auto rows = db->select(
                 columns(
                     &dto::book::isbn,
                     &dto::book::title,
@@ -86,15 +84,12 @@ namespace bib {
                 where(c(&dto::authors_of_books::author_email) == author_email.data())
             );
 
+            std::vector<dto::book> result;
             const auto nb_results = std::distance(std::begin(rows), std::end(rows));
             result.reserve(nb_results);
-
             std::transform(std::begin(rows), std::end(rows), std::back_inserter(result), [](const auto& row) {
-                return dto::book{
-                    std::get<0>(row),
-                    std::get<1>(row),
-                    std::get<2>(row)
-                };
+                const auto& [isbn, title, year, _1, _2] = row;
+                return dto::book{ isbn, title, year };
             });
 
             return result;

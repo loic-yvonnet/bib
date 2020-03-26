@@ -13,7 +13,7 @@
 #include <string_view>
 
 namespace bib {
-    constexpr const char* default_database = "database.db";
+    constexpr const char* default_database = ".database.sqlite";
 
     namespace sql = sqlite_orm;
 
@@ -22,7 +22,7 @@ namespace bib {
             db_name.data(),
             sql::make_table(
                 "authors",
-                sql::make_column("email", &dto::author::email, sql::primary_key()),
+                sql::make_column("email", &dto::author::email, sql::unique()),
                 sql::make_column("first_name", &dto::author::first_name),
                 sql::make_column("last_name", &dto::author::last_name),
                 sql::make_column("mobile", &dto::author::mobile),
@@ -32,13 +32,12 @@ namespace bib {
             ),
             sql::make_table(
                 "books",
-                sql::make_column("isbn", &dto::book::isbn, sql::primary_key()),
+                sql::make_column("isbn", &dto::book::isbn, sql::unique()),
                 sql::make_column("title", &dto::book::title),
                 sql::make_column("year", &dto::book::year)
             ),
             sql::make_table(
                 "authors_of_books",
-                sql::make_column("id", &dto::authors_of_books::id, sql::autoincrement(), sql::primary_key()),
                 sql::make_column("author_email", &dto::authors_of_books::author_email),
                 sql::make_column("book_isbn", &dto::authors_of_books::book_isbn)
             )
