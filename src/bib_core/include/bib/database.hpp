@@ -13,10 +13,21 @@
 #include <string_view>
 
 namespace bib {
+    /**
+     * @brief Default hidden Sqlite DB file name.
+     */
     constexpr const char* default_database = ".database.sqlite";
 
+    /**
+     * @brief Simpler Sqlite alias.
+     */
     namespace sql = sqlite_orm;
 
+    /**
+     * @brief Definition of the Sqlite schema.
+     * @param db_name - the Sqlite database filename.
+     * @return the associated DB storage.
+     */
     inline auto make_storage(std::string_view db_name) {
         return sql::make_storage(
             db_name.data(),
@@ -44,20 +55,42 @@ namespace bib {
         );
     }
 
+    /**
+     * @brief Alias the storage type.
+     */
     using storage = decltype(make_storage(default_database));
 
+    /**
+     * @brief This class represents a Sqlite database.
+     */
     class [[nodiscard]] database final {
     public:
+        /**
+         * @brief Constructor.
+         */
         explicit database(std::string_view db_name = default_database);
 
+        /**
+         * @brief Movable, non-copyable type.
+         */
         database(const database&) = delete;
         database(database&&) = default;
         database& operator=(const database&) = delete;
-        database& operator=(database&&) = delete;
-    
+        database& operator=(database&&) = default;
+
+        /**
+         * @brief Get the underlying storage.
+         * @return the underlying storage.
+         */
         const storage& get() const noexcept { return db; }
         storage& get() noexcept { return db; }
 
+        /**
+         * @brief Syntactic sugar to manipulate the
+         * underlying storage directly from an instance
+         * of this class.
+         * @return a not null pointer to the storage.
+         */
         const storage* operator->() const noexcept { return &db; }
         storage* operator->() noexcept { return &db; }
 

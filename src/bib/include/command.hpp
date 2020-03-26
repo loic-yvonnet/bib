@@ -11,18 +11,36 @@
 
 namespace bib {
     namespace front_end {
+        /**
+         * @brief Command design pattern.
+         * A command here represents an action to be executed
+         * on a subject with strongly-typed argument TData.
+         * @param TData - the command arguments.
+         */
         template <typename TData>
         class command final {
         public:
+            /**
+             * @brief Constructor.
+             */
             explicit command(const TData& data) :
                 data{ data } {}
 
+            /**
+             * @brief Execute the command.
+             * This method is meant to be specialized for each
+             * concrete command.
+             * @return an execution report.
+             */
             std::string execute() const;
 
         private:
             TData data;
         };
 
+        /**
+         * @brief Author addition command.
+         */
         template <>
         inline std::string command<arguments::author_addition_arg>::execute() const
         {
@@ -42,6 +60,9 @@ namespace bib {
             return dao.insert_author(auth);
         }
 
+        /**
+         * @brief Author search command.
+         */
         template <>
         inline std::string command<arguments::author_search_arg>::execute() const
         {
@@ -58,6 +79,9 @@ namespace bib {
             return ss.str();
         }
 
+        /**
+         * @brief Book addition command.
+         */
         template <>
         inline std::string command<arguments::book_addition_arg>::execute() const
         {
@@ -80,6 +104,9 @@ namespace bib {
             return ss.str();
         }
 
+        /**
+         * @brief Book search command.
+         */
         template <>
         inline std::string command<arguments::book_search_arg>::execute() const
         {

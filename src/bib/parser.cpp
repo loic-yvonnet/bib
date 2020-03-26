@@ -112,7 +112,7 @@ namespace bib {
         {
             po::options_description options("Author search options");
             options.add_options()
-                ("book", po::value<std::string>()->required(), "The book title whose author(s) is(are) requested");
+                ("book", po::value<std::string>()->required(), "The book isbn whose author(s) is(are) requested");
 
             return options;
         }

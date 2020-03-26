@@ -49,10 +49,10 @@ The test suite may be run with:
 ## Work in Progress
 
 The following things are pending:
-* Add comments in the header files.
 * Add shells at the top of the solution for convenience.
 * Support Windows (addition of batches, declspec, etc.).
 * Check user inputs.
 * Add logs (verbose mode).
 * Troubleshoot the boost::program_options that truncs strings at the first space.
 * Fix the help message.
+* Fix the VS Code gdb issue.

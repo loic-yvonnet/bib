@@ -12,16 +12,48 @@
 
 namespace bib {
     namespace front_end {
+        /**
+         * @brief Shorter namespace alias for program options management.
+         */
         namespace po = boost::program_options;
 
+        /**
+         * @brief The parser is responsible for deserializing the command
+         * line arguments.
+         */
         class parser final {
         public:
+            /**
+             * @brief Constructor.
+             * It starts parsing the action of subject.
+             */
             explicit parser(int argc, char** argv);
 
+            /**
+             * @brief Get the parsed action.
+             * @return the action.
+             */
             action_t get_action() const noexcept { return action; }
+
+            /**
+             * @brief Get the parsed subject.
+             * @return the subject.
+             */
             subject_t get_subject() const noexcept { return subject; }
+
+            /**
+             * @brief Get the help message.
+             * @return the help message.
+             */
             std::string get_help() const;
 
+            /**
+             * @brief Parse the remaining specific arguments.
+             * These arguments depend on the selected action and subject.
+             * This method is meant to be specialized.
+             * @return the strongly-typed argument from the selected
+             * action and subject, and remaining arguments.
+             */
             template <typename TArgument>
             TArgument parse();
 
@@ -43,6 +75,9 @@ namespace bib {
             po::parsed_options parsed_options;
         };
 
+        /**
+         * @brief Author addition argument parser.
+         */
         template <>
         inline arguments::author_addition_arg parser::parse<arguments::author_addition_arg>()
         {
@@ -60,6 +95,9 @@ namespace bib {
             };
         }
 
+        /**
+         * @brief Author search argument parser.
+         */
         template <>
         inline arguments::author_search_arg parser::parse<arguments::author_search_arg>()
         {
@@ -71,6 +109,9 @@ namespace bib {
             };
         }
 
+        /**
+         * @brief Book addition argument parser.
+         */
         template <>
         inline arguments::book_addition_arg parser::parse<arguments::book_addition_arg>()
         {
@@ -85,6 +126,9 @@ namespace bib {
             };
         }
 
+        /**
+         * @brief Book search argument parser.
+         */
         template <>
         inline arguments::book_search_arg parser::parse<arguments::book_search_arg>()
         {
